@@ -1,11 +1,14 @@
 package com.bootcamp;
 
-public class ConsoleBehaviour implements PlayerBehaviour {
+public class ConsoleBehaviour extends PlayerBehaviour {
     private ScannerWrapper wrapper;
 
-    public ConsoleBehaviour(ScannerWrapper wrapper) {
+
+    public ConsoleBehaviour(CurrentRoundInfo currentRoundInfo, ScannerWrapper wrapper) {
+        super(currentRoundInfo);
         this.wrapper = wrapper;
     }
+
 
     @Override
     public Behaviour play() {

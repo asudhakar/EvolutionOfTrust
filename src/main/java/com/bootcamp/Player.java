@@ -7,7 +7,10 @@ public class Player {
         this.behaviour = behaviour;
     }
 
-    public Behaviour play() {
-       return this.behaviour.play();
+    Behaviour play() {
+        Behaviour  behaviour = this.behaviour.play();
+        CurrentRoundInfo currentRoundInfo = this.behaviour.currentRoundInfo;
+        currentRoundInfo.behaviour =  behaviour;
+        return behaviour;
     }
 }

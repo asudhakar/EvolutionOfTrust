@@ -1,5 +1,14 @@
 package com.bootcamp;
 
-public interface PlayerBehaviour {
-    public abstract Behaviour play();
+public abstract class PlayerBehaviour {
+    protected CurrentRoundInfo currentRoundInfo;
+
+    public PlayerBehaviour(CurrentRoundInfo currentRoundInfo) {
+        this.currentRoundInfo = currentRoundInfo;
+    }
+
+    public CurrentRoundInfo getCurrentRoundInfo() {
+        return currentRoundInfo;
+    }
+    abstract Behaviour play();
 }
