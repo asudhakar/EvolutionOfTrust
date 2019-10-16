@@ -1,6 +1,7 @@
 package com.bootcamp;
 
 public class Game {
+    CurrentBehaviourObserver currentBehaviourObserver;
 
     private Score score = new Score(0, 0);
     private Player player1;
@@ -10,21 +11,25 @@ public class Game {
     Behaviour playerOneInput;
     Behaviour playerTwoInput;
 
-    public Game(Player player1, Player player2, int numberOfRounds) {
+    public Game(Player player1, Player player2, int numberOfRounds,CurrentBehaviourObserver currentBehaviourObserver) {
         this.player1 = player1;
         this.player2 = player2;
         this.numberOfRounds = numberOfRounds;
+        this.currentBehaviourObserver = currentBehaviourObserver;
     }
 
     public Score start() {
         for (int i = 0; i < this.numberOfRounds; i++) {
             playerOneInput = player1.play();
+            currentBehaviourObserver.update(playerOneInput);
             playerTwoInput = player2.play();
+            currentBehaviourObserver.update(playerTwoInput);
             Score roundScore = rule(playerOneInput, playerTwoInput);
-            this.score.updateScores(roundScore.getPlayer1Score(), roundScore.getPlayer2Score());
+            score.updateScores(roundScore.getPlayer1Score(), roundScore.getPlayer2Score());
+            currentBehaviourObserver.firstMove = false;
         }
 
-        return this.score;
+        return score;
     }
 
     public Score rule(Behaviour player1Input, Behaviour player2Input) {

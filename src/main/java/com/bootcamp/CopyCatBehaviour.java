@@ -2,19 +2,14 @@ package com.bootcamp;
 
 public class CopyCatBehaviour extends PlayerBehaviour {
 
-    public CopyCatBehaviour(CurrentRoundInfo currentRoundInfo) {
-        super(currentRoundInfo);
-    }
 
     @Override
     public Behaviour play() {
-        Behaviour behaviour;
-        if (currentRoundInfo.behaviour == null || currentRoundInfo.round == 0) {
-            behaviour =  Behaviour.Cooperate;
+        CurrentBehaviourObserver currentBehaviourObserver = CurrentBehaviourObserver.getInstance();
+        if (currentBehaviourObserver.firstMove || currentBehaviourObserver.behaviour == null) {
+            return Behaviour.Cooperate;
         } else {
-            behaviour =  currentRoundInfo.behaviour;
+            return currentBehaviourObserver.behaviour;
         }
-        currentRoundInfo.round++;
-        return behaviour;
     }
 }

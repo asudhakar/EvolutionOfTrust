@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 public class GameTest {
 
@@ -53,6 +52,7 @@ public class GameTest {
 //    @Test
 //    public void shouldReturnAValidCheatMovesFor2Rounds() {
 //        ScannerWrapper mockScannerWrapper = mock(ScannerWrapper.class);
+//        CurrentBehaviourObserver currentBehaviourObserver = new CurrentBehaviourObserver();
 //        Player player1 = new Player(new ConsoleBehaviour(mockScannerWrapper));
 //        Player player2 = new Player(new CheatBehaviour());
 //        when(mockScannerWrapper.readInput()).thenReturn("CH","CO");
@@ -63,25 +63,14 @@ public class GameTest {
 //        assertEquals(3, score.getPlayer2Score());
 //    }
 
-    @Test
-    public void shouldCopyThePreviousPlayerMove() {
-        CurrentRoundInfo currentRoundInfo = new CurrentRoundInfo();
-        Player player1 = new Player(new CheatBehaviour(currentRoundInfo));
-        Player player2 = new Player(new CopyCatBehaviour(currentRoundInfo));
-
-        Game game = new Game(player1, player2, 1);
-        Score score = game.start();
-        assertEquals(3, score.getPlayer1Score());
-        assertEquals(-1, score.getPlayer2Score());
-    }
 
     @Test
     public void shouldCopyThePreviousPlayerMoveForMultipleRounds() {
-        CurrentRoundInfo currentRoundInfo = new CurrentRoundInfo();
-        Player player1 = new Player(new CheatBehaviour(currentRoundInfo));
-        Player player2 = new Player(new CopyCatBehaviour(currentRoundInfo));
+        CurrentBehaviourObserver currentBehaviourObserver = CurrentBehaviourObserver.getInstance();
+        Player player1 = new Player(new CopyCatBehaviour());
+        Player player2 = new Player(new CheatBehaviour());
 
-        Game game = new Game(player1, player2, 2);
+        Game game = new Game(player1, player2, 2, currentBehaviourObserver);
         Score score = game.start();
         assertEquals(3, score.getPlayer1Score());
         assertEquals(-1, score.getPlayer2Score());
@@ -89,11 +78,11 @@ public class GameTest {
 
     @Test
     public void shouldCopyTheCoOperativePlayerMoveForMultipleRounds() {
-        CurrentRoundInfo currentRoundInfo = new CurrentRoundInfo();
-        Player player1 = new Player(new CooperateBehaviour(currentRoundInfo));
-        Player player2 = new Player(new CopyCatBehaviour(currentRoundInfo));
+        CurrentBehaviourObserver currentBehaviourObserver = CurrentBehaviourObserver.getInstance();
+        Player player1 = new Player(new CopyCatBehaviour());
+        Player player2 = new Player(new CooperateBehaviour());
 
-        Game game = new Game(player1, player2, 3);
+        Game game = new Game(player1, player2, 3, currentBehaviourObserver);
         Score score = game.start();
         assertEquals(6, score.getPlayer1Score());
         assertEquals(6, score.getPlayer2Score());

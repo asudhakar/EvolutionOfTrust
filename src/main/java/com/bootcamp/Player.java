@@ -8,9 +8,6 @@ public class Player {
     }
 
     Behaviour play() {
-        Behaviour  behaviour = this.behaviour.play();
-        CurrentRoundInfo currentRoundInfo = this.behaviour.currentRoundInfo;
-        currentRoundInfo.behaviour =  behaviour;
-        return behaviour;
+        return this.behaviour.play();
     }
 }

@@ -4,8 +4,7 @@ public class ConsoleBehaviour extends PlayerBehaviour {
     private ScannerWrapper wrapper;
 
 
-    public ConsoleBehaviour(CurrentRoundInfo currentRoundInfo, ScannerWrapper wrapper) {
-        super(currentRoundInfo);
+    public ConsoleBehaviour(ScannerWrapper wrapper) {
         this.wrapper = wrapper;
     }
 
