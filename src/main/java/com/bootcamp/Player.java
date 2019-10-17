@@ -7,7 +7,15 @@ public class Player {
         this.behaviour = behaviour;
     }
 
-    Behaviour play() {
+    Move play() {
         return this.behaviour.play();
+    }
+
+    public void changeBehaviour(PlayerBehaviour behaviour) {
+        this.behaviour = behaviour;
+    }
+
+    public PlayerBehaviour getBehaviour() {
+        return behaviour;
     }
 }

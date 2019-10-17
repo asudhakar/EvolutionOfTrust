@@ -4,12 +4,12 @@ public class CopyCatBehaviour extends PlayerBehaviour {
 
 
     @Override
-    public Behaviour play() {
+    public Move play() {
         CurrentBehaviourObserver currentBehaviourObserver = CurrentBehaviourObserver.getInstance();
-        if (currentBehaviourObserver.firstMove || currentBehaviourObserver.behaviour == null) {
-            return Behaviour.Cooperate;
+        if (currentBehaviourObserver.firstMove || currentBehaviourObserver.move == null) {
+            return Move.Cooperate;
         } else {
-            return currentBehaviourObserver.behaviour;
+            return currentBehaviourObserver.move;
         }
     }
 }

@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class GameTest {
 
@@ -86,5 +87,57 @@ public class GameTest {
         Score score = game.start();
         assertEquals(6, score.getPlayer1Score());
         assertEquals(6, score.getPlayer2Score());
+    }
+
+    @Test
+    public void shouldDetectiveAnalyzeOpponentMoveAfterFourRounds() {
+        DetectiveObserver detectiveObserver = DetectiveObserver.getInstance();
+        Player player1 = new Player(new DetectiveBehaviour());
+        ScannerWrapper mockScannerWrapper = mock(ScannerWrapper.class);
+        when(mockScannerWrapper.readInput()).thenReturn("CO","CO","CO","CO");
+        Player player2 = new Player(new ConsoleBehaviour(mockScannerWrapper));
+        Game game = new Game(player1, player2, 4, detectiveObserver);
+        Score score = game.start();
+        assertEquals(9, score.getPlayer1Score());
+        assertEquals(5, score.getPlayer2Score());
+    }
+
+    @Test
+    public void shouldDetectiveAnalyzeOpponentIfOpponentCheatOnceDetectiveShouldChangeAsCopyCat() {
+        DetectiveObserver detectiveObserver = DetectiveObserver.getInstance();
+        Player player1 = new Player(new DetectiveBehaviour());
+        ScannerWrapper mockScannerWrapper = mock(ScannerWrapper.class);
+        when(mockScannerWrapper.readInput()).thenReturn("CO","CO","CH","CO");
+        Player player2 = new Player(new ConsoleBehaviour(mockScannerWrapper));
+        Game game = new Game(player1, player2, 4, detectiveObserver);
+        Score score = game.start();
+        assertEquals(6, score.getPlayer1Score());
+        assertEquals(6, score.getPlayer2Score());
+    }
+
+    @Test
+    public void shouldDetectiveAnalyzeOpponentIfOpponentCheatOnceDetectiveShouldChangeAsCopyCatMoreThanFourRounds() {
+        DetectiveObserver detectiveObserver = DetectiveObserver.getInstance();
+        Player player1 = new Player(new DetectiveBehaviour());
+        ScannerWrapper mockScannerWrapper = mock(ScannerWrapper.class);
+        when(mockScannerWrapper.readInput()).thenReturn("CO","CO","CH","CO","CO", "CO", "CH", "CH");
+        Player player2 = new Player(new ConsoleBehaviour(mockScannerWrapper));
+        Game game = new Game(player1, player2, 8, detectiveObserver);
+        Score score = game.start();
+        assertEquals(9, score.getPlayer1Score());
+        assertEquals(13, score.getPlayer2Score());
+    }
+
+    @Test
+    public void shouldDetectiveAnalyzeOpponentIfOpponentNeverCheatedDetectiveShouldCheatAfterFourRounds() {
+        DetectiveObserver detectiveObserver = DetectiveObserver.getInstance();
+        Player player1 = new Player(new DetectiveBehaviour());
+        ScannerWrapper mockScannerWrapper = mock(ScannerWrapper.class);
+        when(mockScannerWrapper.readInput()).thenReturn("CO","CO","CO","CO","CO", "CO", "CO", "CO");
+        Player player2 = new Player(new ConsoleBehaviour(mockScannerWrapper));
+        Game game = new Game(player1, player2, 8, detectiveObserver);
+        Score score = game.start();
+        assertEquals(21, score.getPlayer1Score());
+        assertEquals(1, score.getPlayer2Score());
     }
 }

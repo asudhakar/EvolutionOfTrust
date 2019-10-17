@@ -1,7 +1,7 @@
 package com.bootcamp;
 
-public class CurrentBehaviourObserver implements PreviousBehaviourObserver {
-    Behaviour behaviour;
+public class CurrentBehaviourObserver implements BehaviourObserver {
+    Move move;
     public Boolean firstMove =  true;
 
     private static CurrentBehaviourObserver currentBehaviourObserver;
@@ -15,8 +15,8 @@ public class CurrentBehaviourObserver implements PreviousBehaviourObserver {
     }
 
     @Override
-    public void update(Behaviour behaviour) {
-        this.behaviour = behaviour;
+    public void update(Move move, Player player) {
+        this.move = move;
     }
 
 
